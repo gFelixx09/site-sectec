@@ -516,7 +516,7 @@ compareBtn.addEventListener('click', () => {
 
   // Dá tempo do efeito de zoom (2s via CSS) ser visto antes de abrir o modal.
   // No mobile soma um tempo extra para a rolagem até o mapa também acontecer.
-  const delay = isMobile ? 2300 : 1900;
+  const delay = isMobile ? 2100 : 1200;
   setTimeout(openCompareModal, delay);
 });
 
