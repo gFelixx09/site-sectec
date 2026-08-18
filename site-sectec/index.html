@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fortaleza: o verde tem CEP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style1.css">
+  <link rel="icon" href="img/title.png" type="image/png">
+</head>
+
+<body>
+  <div class="contours"></div>
+
+  <div class="tutorial-overlay hidden" id="tutorialOverlay" aria-hidden="true">
+    <div class="tutorial-modal" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+      <div class="tutorial-header">
+        <h2 id="tutorialTitle">Bem-vindo</h2>
+        <p>Use este mapa em três passos simples.</p>
+      </div>
+
+      <div class="tutorial-steps">
+        <div class="tutorial-step active" data-step="1">
+          <div class="step-icon">1</div>
+          <h3>Escolha um bairro periférico</h3>
+          <p>Clique em um bairro da lista ou diretamente no mapa. A comparação será sempre feita com Meireles.</p>
+        </div>
+
+        <div class="tutorial-step active" data-step="2">
+          <div class="step-icon">2</div>
+          <h3>Clique em comparar</h3>
+          <p>Depois da escolha, o botão será ativado para abrir o painel com os indicadores lado a lado.</p>
+        </div>
+
+        <div class="tutorial-step active" data-step="3">
+          <div class="step-icon">3</div>
+          <h3>Leia os status dos dados</h3>
+          <p>Renda tem valores confirmados para alguns bairros; os outros indicadores estão marcados como estimativas do protótipo.</p>
+        </div>
+      </div>
+
+      <button class="tutorial-btn" id="startTutorialBtn" type="button">Começar a explorar</button>
+      <p class="tutorial-hint">Você pode voltar a este guia pelo botão de ajuda no canto superior.</p>
+    </div>
+  </div>
+
+  <div class="compare-overlay" id="compareOverlay" aria-hidden="true">
+    <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+      <button class="compare-close" id="compareCloseBtn" type="button" aria-label="Fechar comparação">×</button>
+
+      <div class="compare-headline">
+        <div>
+          <h2 id="compareTitle">Meireles × —</h2>
+          <p>Comparação socioambiental em painel executivo.</p>
+          <span class="executive-tag">Valores confirmados e estimados são identificados nos cards.</span>
+        </div>
+      </div>
+
+      <div class="simple-summary">
+        <span class="summary-label">Leitura rápida</span>
+        <p id="simpleNarrative">Escolha um bairro para ver o resumo da comparação.</p>
+      </div>
+
+      <div class="kpi-strip" id="kpiStrip">
+        <article class="kpi-card kpi-income">
+          <span class="kpi-label">Gap de renda</span>
+          <strong id="kpiIncome">—</strong>
+        </article>
+        <article class="kpi-card kpi-green">
+          <span class="kpi-label">Gap de arborização</span>
+          <strong id="kpiGreen">—</strong>
+        </article>
+        <article class="kpi-card kpi-heat">
+          <span class="kpi-label">Gap térmico</span>
+          <strong id="kpiHeat">—</strong>
+        </article>
+        <article class="kpi-card kpi-clean">
+          <span class="kpi-label">Gap de coleta</span>
+          <strong id="kpiClean">—</strong>
+        </article>
+      </div>
+
+      <div class="insight-grid">
+        <section class="diff-block">
+          <h3>O que isso quer dizer</h3>
+          <div class="diff-list" id="diffList"></div>
+        </section>
+
+        <section class="state-block">
+          <h3>Fortaleza em contexto por bairros</h3>
+          <p id="stateNarrative">—</p>
+          <div class="metric-switch" id="metricSwitch" role="group" aria-label="Métrica do gráfico">
+            <button class="metric-btn is-active" type="button" data-metric="geral">Índice geral</button>
+            <button class="metric-btn" type="button" data-metric="renda">Renda</button>
+            <button class="metric-btn" type="button" data-metric="arv">Arborização</button>
+            <button class="metric-btn" type="button" data-metric="coleta">Coleta</button>
+            <button class="metric-btn" type="button" data-metric="temp">Temperatura</button>
+          </div>
+          <p class="metric-help" id="metricHelp">Toque em uma métrica para ver o ranking dos bairros.</p>
+          <div class="chart-legend" id="chartLegend">
+            <span><i class="legend-dot legend-dot-top"></i>posição mais favorável</span>
+            <span><i class="legend-dot legend-dot-last"></i>posição menos favorável</span>
+            <span><i class="legend-dot legend-dot-focus"></i>bairro selecionado</span>
+          </div>
+          <div class="state-chart city-chart" id="stateChart"></div>
+          <p class="state-note">Base: pesquisas feitas. Renda confirmada via IPECE/Censo 2022; demais valores são estimativas do protótipo.</p>
+        </section>
+      </div>
+
+      <section class="details-block">
+        <h3>Dados lado a lado</h3>
+        <div class="compare-flex" id="compareFlex">
+          <section class="compare-card tone-ref">
+            <h3>Meireles</h3>
+            <p class="sub">bairro de referência</p>
+            <div class="kv"><span>Renda média</span><b id="m-renda">—</b></div>
+            <div class="kv"><span>Arborização</span><b id="m-arv">—</b></div>
+            <div class="kv"><span>Descarte irregular</span><b id="m-lixo">—</b></div>
+            <div class="kv"><span>Coleta seletiva</span><b id="m-coleta">—</b></div>
+            <div class="kv"><span>Temperatura média</span><b id="m-temp">—</b></div>
+          </section>
+
+          <section class="compare-card tone-selected">
+            <h3 id="r-nome">—</h3>
+            <p class="sub" id="r-sub">—</p>
+            <div class="kv"><span>Renda média</span><b id="r-renda">—</b></div>
+            <div class="kv"><span>Arborização</span><b id="r-arv">—</b></div>
+            <div class="kv"><span>Descarte irregular</span><b id="r-lixo">—</b></div>
+            <div class="kv"><span>Coleta seletiva</span><b id="r-coleta">—</b></div>
+            <div class="kv"><span>Temperatura média</span><b id="r-temp">—</b></div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="shell">
+    <header class="hero">
+      <div class="brand-mark"><img src="img/title.png" alt="Fortaleza: o verde tem CEP"></div>
+      <div class="hero-copy">
+        <div class="eyebrow">Estudo de Desigualdade Socioambiental — Fortaleza/Ce</div>
+        <p>O CEP pode definir muito mais do que um endereço. Meireles e os bairros periféricos de Fortaleza revelam realidades diferentes de uma mesma cidade.Compare a arborização, a limpeza e o cuidado com os espaços públicos e descubra como o acesso à qualidade ambiental também pode ser desigual.</p>
+      </div>
+      <button class="help-btn" id="helpBtn" type="button" aria-label="Ver guia de uso"
+        title="Clique aqui para ver como usar o site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4M12 8h.01"></path>
+        </svg>
+      </button>
+    </header>
+
+    <main>
+      <div class="work-grid">
+        <section class="map-card">
+          <div class="map-card-head">
+            <div>
+              <h2>Mapa de Fortaleza</h2>
+              <span id="mapStatus" class="status-hint">Clique em um bairro para começar a comparação.</span>
+            </div>
+            <div class="legend">
+              <span><i class="dot-ref"></i>selecionado</span>
+              <span><i class="dot-opt"></i>disponível</span>
+            </div>
+          </div>
+
+          <div class="map-frame" id="mapFrame">
+            <div class="map-layer"></div>
+            <div class="map-dim" id="mapDim"></div>
+            <div class="spotlight" id="spotA"></div>
+            <div class="spotlight" id="spotB"></div>
+            <svg class="conduit" id="conduit" viewBox="0 0 800 661" preserveAspectRatio="none">
+              <path id="conduitPath" d=""></path>
+            </svg>
+
+            <button class="badge is-active" style="left:58.1%; top:21%;" type="button"
+              aria-label="Meireles, bairro de referência">
+              <div class="pin"></div>
+              <div class="badge-label">MEIRELES</div>
+            </button>
+
+            <button class="badge selectable" data-id="pirambu" style="left:36.0%; top:12.3%;" type="button">
+              <div class="pin"></div>
+              <div class="badge-label">PIRAMBU</div>
+            </button>
+            <button class="badge selectable" data-id="barradoceara" style="left:24.4%; top:8.3%;" type="button">
+              <div class="pin"></div>
+              <div class="badge-label">BARRA DO CEARÁ</div>
+            </button>
+            <button class="badge selectable" data-id="jangurussu" style="left:52.5%; top:74.9%;" type="button">
+              <div class="pin"></div>
+              <div class="badge-label">JANGURUSSU</div>
+            </button>
+            <button class="badge selectable" data-id="bomjardim" style="left:16%; top:53%;" type="button">
+              <div class="pin"></div>
+              <div class="badge-label">BOM JARDIM</div>
+            </button>
+          </div>
+
+          <div class="map-hint">Os demais bairros seguem a divisão oficial, mas ainda não têm interação nesta versão.</div>
+        </section>
+
+        <aside class="side-panel">
+          <div class="panel-block">
+            <h3>Referência fixa</h3>
+            <div class="ref-line">
+              <div class="dot"></div>
+              <div><b>Meireles</b><span>maior renda média entre os bairros analisados</span></div>
+            </div>
+
+            <h3 class="step-marker">Passo 1: escolha um bairro</h3>
+            <p class="instruction-text">Clique em um bairro abaixo para comparar com Meireles.</p>
+            <div class="chip-grid" id="chipGrid">
+              <button class="chip" data-id="pirambu" type="button">
+                <b>Pirambu</b><span>litoral oeste, ocupação histórica</span>
+              </button>
+              <button class="chip" data-id="jangurussu" type="button">
+                <b>Jangurussu</b><span>zona sul, próximo ao antigo aterro</span>
+              </button>
+              <button class="chip" data-id="barradoceara" type="button">
+                <b>Barra do Ceará</b><span>bairro na foz do rio Ceará</span>
+              </button>
+              <button class="chip" data-id="bomjardim" type="button">
+                <b>Bom Jardim</b><span>uma das regiões mais densas da cidade</span>
+              </button>
+            </div>
+
+            <div class="vs-row">
+              <div class="side"><span class="name" id="vsLeftName">Meireles</span></div>
+              <div class="vs-x">×</div>
+              <div class="side"><span class="name" id="vsRightName">—</span></div>
+            </div>
+
+            <button class="compare-btn" id="compareBtn" disabled type="button">
+              <span id="compareBtnLabel">Comparar bairros</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </button>
+            <p class="compare-hint">O botão será ativado depois da escolha do bairro.</p>
+          </div>
+
+          <div class="panel-block">
+            <p class="impact-quote">"O <span>CEP</span> pode influenciar até a qualidade do ar, da sombra e do ambiente em que uma pessoa vive."</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer>
+      <span>Fortaleza: o verde tem CEP - Site para Sectec</span>
+      <span>fonte do mapa-base: divisão de bairros de Fortaleza</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
