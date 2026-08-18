@@ -508,7 +508,16 @@ compareBtn.addEventListener('click', () => {
   drawConduit('meireles', selected);
   fillStats(selected);
 
-  setTimeout(openCompareModal, 650);
+  const isMobile = window.matchMedia('(max-width: 880px)').matches;
+
+  if (isMobile) {
+    mapFrame.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Dá tempo do efeito de zoom (2s via CSS) ser visto antes de abrir o modal.
+  // No mobile soma um tempo extra para a rolagem até o mapa também acontecer.
+  const delay = isMobile ? 2300 : 1900;
+  setTimeout(openCompareModal, delay);
 });
 
 document.addEventListener('DOMContentLoaded', initTutorial);

@@ -149,10 +149,16 @@ main {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding-top: 84px;
   }
 
   .eyebrow {
     justify-content: center;
+    margin-top: 0;
+  }
+
+  .hero-copy {
+    width: 100%;
   }
 
   .hero-copy p {
@@ -167,10 +173,6 @@ main {
     position: absolute;
     top: clamp(28px, 5vw, 40px);
     right: 0;
-  }
-
-  .hero-copy {
-    padding-right: 54px;
   }
 }
 
