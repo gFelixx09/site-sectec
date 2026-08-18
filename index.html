@@ -19,33 +19,35 @@
 
   <div class="tutorial-overlay hidden" id="tutorialOverlay" aria-hidden="true">
     <div class="tutorial-modal" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
-      <div class="tutorial-header">
-        <h2 id="tutorialTitle">Bem-vindo</h2>
-        <p>Use este mapa em três passos simples.</p>
+      <div class="tutorial-scroll">
+        <div class="tutorial-header">
+          <h2 id="tutorialTitle">Bem-vindo</h2>
+          <p>Use este mapa em três passos simples.</p>
+        </div>
+
+        <div class="tutorial-steps">
+          <div class="tutorial-step active" data-step="1">
+            <div class="step-icon">1</div>
+            <h3>Escolha um bairro periférico</h3>
+            <p>Clique em um bairro da lista ou diretamente no mapa. A comparação será sempre feita com Meireles.</p>
+          </div>
+
+          <div class="tutorial-step active" data-step="2">
+            <div class="step-icon">2</div>
+            <h3>Clique em comparar</h3>
+            <p>Depois da escolha, o botão será ativado para abrir o painel com os indicadores lado a lado.</p>
+          </div>
+
+          <div class="tutorial-step active" data-step="3">
+            <div class="step-icon">3</div>
+            <h3>Leia os status dos dados</h3>
+            <p>Renda tem valores confirmados para alguns bairros; os outros indicadores estão marcados como estimativas do protótipo.</p>
+          </div>
+        </div>
+
+        <button class="tutorial-btn" id="startTutorialBtn" type="button">Começar a explorar</button>
+        <p class="tutorial-hint">Você pode voltar a este guia pelo botão de ajuda no canto superior.</p>
       </div>
-
-      <div class="tutorial-steps">
-        <div class="tutorial-step active" data-step="1">
-          <div class="step-icon">1</div>
-          <h3>Escolha um bairro periférico</h3>
-          <p>Clique em um bairro da lista ou diretamente no mapa. A comparação será sempre feita com Meireles.</p>
-        </div>
-
-        <div class="tutorial-step active" data-step="2">
-          <div class="step-icon">2</div>
-          <h3>Clique em comparar</h3>
-          <p>Depois da escolha, o botão será ativado para abrir o painel com os indicadores lado a lado.</p>
-        </div>
-
-        <div class="tutorial-step active" data-step="3">
-          <div class="step-icon">3</div>
-          <h3>Leia os status dos dados</h3>
-          <p>Renda tem valores confirmados para alguns bairros; os outros indicadores estão marcados como estimativas do protótipo.</p>
-        </div>
-      </div>
-
-      <button class="tutorial-btn" id="startTutorialBtn" type="button">Começar a explorar</button>
-      <p class="tutorial-hint">Você pode voltar a este guia pelo botão de ajuda no canto superior.</p>
     </div>
   </div>
 

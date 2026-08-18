@@ -147,7 +147,16 @@ main {
 
   header.hero {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+  }
+
+  .hero-copy p {
+    margin: 0 auto;
   }
 
   .brand-mark {
@@ -1683,13 +1692,18 @@ footer {
 .tutorial-modal {
   background: var(--panel);
   border-radius: 20px;
-  padding: clamp(24px, 4vw, 40px);
   max-width: 520px;
   width: 90%;
   max-height: 85vh;
-  overflow-y: auto;
+  overflow: hidden;
   box-shadow: 0 20px 60px rgba(19, 51, 34, 0.25);
   animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.tutorial-scroll {
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: clamp(24px, 4vw, 40px);
 }
 
 @keyframes slideUp {
