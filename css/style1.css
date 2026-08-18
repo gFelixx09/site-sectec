@@ -25,6 +25,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -81,6 +83,7 @@ header.hero {
   margin-top: 40px;
   position: relative;
   flex: none;
+  overflow: hidden;
 }
 
 .brand-mark img {
